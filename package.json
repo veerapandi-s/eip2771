@@ -8,6 +8,7 @@
     "@opengsn/contracts": "^2.2.6",
     "@opengsn/paymasters": "2.2.3",
     "@opengsn/provider": "^2.2.6",
+    "@truffle/hdwallet-provider": "^2.0.9",
     "browserify": "^17.0.0",
     "ethers": "^5.3.0",
     "ganache-cli": "^6.12.2",
@@ -21,6 +22,7 @@
     "compile": "truffle compile",
     "start": "truffle deploy && ./ui/compile.sh && yarn serve ./html",
     "start-rinkeby": "truffle deploy --network rinkeby && ./ui/compile.sh && serve ./html",
+    "start-mumbai": "truffle deploy --network mumbai && ./ui/compile.sh && serve ./html",
     "start-server": "./ui/compile.sh && serve ./html"
   },
   "author": "",

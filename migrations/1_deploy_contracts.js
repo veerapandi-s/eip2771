@@ -8,14 +8,16 @@ module.exports = async function (deployer) {
   let relayHubAddress;
   
   if (deployer.network_id == '4') {
-    forwarder = "0x83A54884bE4657706785D7309cf46B58FE5f6e8a";
+    forwarder = "0x83A54884bE4657706785D7309cf46B58FE5f6e8a"; // Rinkeby Forward Address
     relayHubAddress = "0x6650d69225CA31049DB7Bd210aE4671c0B1ca132"; // Rinkeby Relay Hub Address
+  } else if(deployer.network_id == '80001') {
+    forwarder = "0x4d4581c01A457925410cd3877d17b2fd4553b2C5"; // Mumbai Forward Address
+    relayHubAddress = "0x6646cD15d33cE3a6933e36de38990121e8ba2806"; // Mumbai Relay Hub Address
   } else {
     forwarder = require( '../build/gsn/Forwarder' ).address;
     relayHubAddress = require('../build/gsn/RelayHub.json').address;
   }
   
-  // const forwarder = "0x83A54884bE4657706785D7309cf46B58FE5f6e8a"; // Rinkeby Forwarder
   await deployer.deploy(CaptureTheFlag, forwarder)
 
   await deployer.deploy(WhitelistPaymaster)
