@@ -27,7 +27,14 @@ async function initContract() {
     window.location.reload()
   })
   const networkId = await window.ethereum.request({method: 'net_version'})
-  const paymasterAddress = paymasterArtifact.networks[networkId].address;
+
+  let paymasterAddress = paymasterArtifact.networks[networkId].address;
+
+  if (networkId == 4) {
+    paymasterAddress = "0xc7Ba78068dcDd55a719E9C63C2222696B5dB07DD"; // Whitelist Paymaster (Whitelisted address = "0x1A78b07cF867F4BBb708479C17669a56C8a9a2a3")
+  }
+  
+  
   const gsnProvider = await RelayProvider.newProvider({
     provider : window.ethereum,
     config: {
@@ -39,9 +46,15 @@ async function initContract() {
 
   const network = await provider.getNetwork()
   const artifactNetwork = contractArtifact.networks[networkId]
-  if (!artifactNetwork)
-    throw new Error('Can\'t find deployment on network ' + networkId)
-  const contractAddress = artifactNetwork.address
+  console.log("Network", artifactNetwork, networkId);
+  let contractAddress = artifactNetwork.address
+  // if (!artifactNetwork)
+  //   throw new Error('Can\'t find deployment on network ' + networkId)
+  if (networkId == 4) {
+     contractAddress = "0xD7b84e2321dD556690c3be33374B736f9B99AE85";
+  }
+  // const contractAddress = "0xD7b84e2321dD556690c3be33374B736f9B99AE85"; //Rinkeby Capture the flag address
+  
   theContract = new ethers.Contract(
     contractAddress, contractAbi, provider.getSigner())
 

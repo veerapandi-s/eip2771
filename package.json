@@ -19,7 +19,9 @@
     "ganache": "yarn run ganache-cli -d --chainId 1337",
     "test": "run-with-testrpc 'truffle test'",
     "compile": "truffle compile",
-    "start": "truffle deploy && ./ui/compile.sh && yarn serve ./html"
+    "start": "truffle deploy && ./ui/compile.sh && yarn serve ./html",
+    "start-rinkeby": "truffle deploy --network rinkeby && ./ui/compile.sh && serve ./html",
+    "start-server": "./ui/compile.sh && serve ./html"
   },
   "author": "",
   "license": "ISC"
