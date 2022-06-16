@@ -29,22 +29,32 @@ async function initContract() {
   const networkId = await window.ethereum.request({ method: 'net_version' })
 
   let paymasterAddress;
-
+  let gsnConfig;
   if (networkId == 4) {
     paymasterAddress = "0xc7Ba78068dcDd55a719E9C63C2222696B5dB07DD"; // Whitelist Paymaster (Whitelisted address = "0x1A78b07cF867F4BBb708479C17669a56C8a9a2a3")
+    gsnConfig = {
+      paymasterAddress
+    }
   } else if (networkId == 80001) {
     paymasterAddress = "0x69E7398D8D6F56b67d335Ee49C26d01166496FA6";
+    gsnConfig = {
+      relayLookupWindowBlocks: 990,
+      relayRegistrationLookupBlocks: 990,
+      pastEventsQueryMaxPageSize: 990,
+      paymasterAddress
+    }
+  } else if (networkId == 137) {
+    paymasterAddress = "0x48Ded3642A2833C47e32eC1Bb58F8714849c2566";
+    gsnConfig = {
+      relayLookupWindowBlocks: 990,
+      relayRegistrationLookupBlocks: 990,
+      pastEventsQueryMaxPageSize: 990,
+      paymasterAddress
+    }
   } else {
     paymasterAddress = paymasterArtifact.networks[networkId].address;
   }
 
-  // add the following fields to your GSNConfig:
-  const gsnConfig = {
-    relayLookupWindowBlocks: 990,
-    relayRegistrationLookupBlocks: 990,
-    pastEventsQueryMaxPageSize: 990,
-    paymasterAddress
-  }
   const gsnProvider = await RelayProvider.newProvider({
     provider: window.ethereum,
     config: gsnConfig
@@ -59,6 +69,8 @@ async function initContract() {
   //   throw new Error('Can\'t find deployment on network ' + networkId)
   if (networkId == 4) {
     contractAddress = "0xD7b84e2321dD556690c3be33374B736f9B99AE85";
+  } else if (networkId == 137) {
+    contractAddress = "0xa47a971F5129803d9759c54b4fbDb48498695A54"
   } else if (networkId == 80001) {
     contractAddress = "0xdf66516ab612C8af97d07217D48848A2776b6a87";
   } else {
